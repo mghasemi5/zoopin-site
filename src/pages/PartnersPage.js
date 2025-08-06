@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
-import Footer from '../components/Footer';
-import partners from '../data/partners';
 import './PartnersPage.css';
-import { Link } from 'react-router-dom';
+import { fetchPartners } from '../api/partners';
 
 
 
 
 const PartnersPage = () => {
+  const [partners, setPartners] = useState([]);
+
+  useEffect(() => {
+    fetchPartners().then(setPartners).catch(console.error);
+  }, []);
+
   return (
     <>
       <Header />
@@ -37,3 +41,4 @@ const PartnersPage = () => {
 };
 
 export default PartnersPage;
+

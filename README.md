@@ -68,3 +68,21 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Backend API
+
+A Django backend provides REST endpoints for managing partners, insights and users. Install dependencies and run migrations:
+
+```
+pip install -r backend/requirements.txt
+python backend/manage.py migrate
+```
+
+Start the server with:
+
+```
+python backend/manage.py runserver
+```
+
+The API is available under `/api/` (e.g. `http://127.0.0.1:8000/api/partners/`).
+
