@@ -1,7 +1,14 @@
+
 const API_BASE = 'http://127.0.0.1:8000/api';
 
 export async function fetchPartners() {
   const res = await fetch(`${API_BASE}/partners`);
+
+const API_BASE = process.env.REACT_APP_API_URL || '';
+
+export async function fetchPartners() {
+  const res = await fetch(`${API_BASE}/api/partners`);
+
   if (!res.ok) {
     throw new Error('Failed to fetch partners');
   }
@@ -9,7 +16,11 @@ export async function fetchPartners() {
 }
 
 export async function fetchPartner(slug) {
+
   const res = await fetch(`${API_BASE}/partners/${slug}`);
+
+  const res = await fetch(`${API_BASE}/api/partners/${slug}`);
+
   if (!res.ok) {
     throw new Error('Partner not found');
   }
@@ -17,7 +28,11 @@ export async function fetchPartner(slug) {
 }
 
 export async function createPartner(partner) {
+
   const res = await fetch(`${API_BASE}/partners`, {
+
+  const res = await fetch(`${API_BASE}/api/partners`, {
+
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(partner),
@@ -29,7 +44,11 @@ export async function createPartner(partner) {
 }
 
 export async function updatePartner(slug, partner) {
+
   const res = await fetch(`${API_BASE}/partners/${slug}`, {
+
+  const res = await fetch(`${API_BASE}/api/partners/${slug}`, {
+
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(partner),
@@ -41,7 +60,11 @@ export async function updatePartner(slug, partner) {
 }
 
 export async function deletePartner(slug) {
+
   const res = await fetch(`${API_BASE}/partners/${slug}`, {
+
+  const res = await fetch(`${API_BASE}/api/partners/${slug}`, {
+
     method: 'DELETE',
   });
   if (!res.ok) {
