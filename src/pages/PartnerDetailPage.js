@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import partners from '../data/partners';
 import './PartnerDetailPage.css';
+import { fetchPartner } from '../api/partners';
 
 function PartnerDetailPage() {
   const { slug } = useParams();
-  const partner = partners.find((p) => p.slug === slug);
+  const [partner, setPartner] = useState(null);
+
+  useEffect(() => {
+    fetchPartner(slug).then(setPartner).catch(() => setPartner(null));
+  }, [slug]);
 
   if (!partner) {
     return <div className="partner-not-found">Partner not found.</div>;
@@ -32,3 +36,4 @@ function PartnerDetailPage() {
 }
 
 export default PartnerDetailPage;
+

@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Autoplay } from 'swiper/modules'; // ⬅️ Add Autoplay
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './PartnersSection.css';
-import partners from '../data/partners';
+import { fetchPartners } from '../api/partners';
 
 const PartnersSection = () => {
+  const [partners, setPartners] = useState([]);
+
+  useEffect(() => {
+    fetchPartners().then(setPartners).catch(console.error);
+  }, []);
+
   return (
     <section className="partners-section">
       <h2 className="section-title">Meet Our Partners</h2>

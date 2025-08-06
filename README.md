@@ -68,3 +68,14 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Backend API
+
+A minimal backend server is included to serve partner data and provide basic CRUD endpoints. To start the server run:
+
+```
+npm run server
+```
+
+The API is available at `http://localhost:5000/api/partners`.
+
