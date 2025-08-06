@@ -1,28 +1,36 @@
 // src/pages/AdminPartnersPage.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './AdminPartnersPage.css';
-import initialPartners from '../data/partners';
+import { fetchPartners, createPartner, updatePartner, deletePartner } from '../api/partners';
 
 function AdminPartnersPage() {
-  const [partners, setPartners] = useState(initialPartners);
+  const [partners, setPartners] = useState([]);
   const [form, setForm] = useState({ name: '', slug: '', tagline: '', bio: '', email: '', website: '', phone: '', image: '' });
   const [editIndex, setEditIndex] = useState(null);
+
+  useEffect(() => {
+    fetchPartners().then(setPartners).catch(console.error);
+  }, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (editIndex !== null) {
-      const updated = [...partners];
-      updated[editIndex] = form;
+    try {
+      if (editIndex !== null) {
+        await updatePartner(partners[editIndex].slug, form);
+        setEditIndex(null);
+      } else {
+        await createPartner(form);
+      }
+      const updated = await fetchPartners();
       setPartners(updated);
-      setEditIndex(null);
-    } else {
-      setPartners([...partners, form]);
+      setForm({ name: '', slug: '', tagline: '', bio: '', email: '', website: '', phone: '', image: '' });
+    } catch (err) {
+      console.error(err);
     }
-    setForm({ name: '', slug: '', tagline: '', bio: '', email: '', website: '', phone: '', image: '' });
   };
 
   const handleEdit = (index) => {
@@ -30,10 +38,15 @@ function AdminPartnersPage() {
     setEditIndex(index);
   };
 
-  const handleDelete = (index) => {
-    const updated = partners.filter((_, i) => i !== index);
-    setPartners(updated);
-    if (editIndex === index) setEditIndex(null);
+  const handleDelete = async (index) => {
+    try {
+      await deletePartner(partners[index].slug);
+      if (editIndex === index) setEditIndex(null);
+      const updated = await fetchPartners();
+      setPartners(updated);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -70,3 +83,4 @@ function AdminPartnersPage() {
 }
 
 export default AdminPartnersPage;
+
